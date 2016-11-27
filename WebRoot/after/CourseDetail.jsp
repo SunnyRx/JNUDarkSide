@@ -24,7 +24,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
- <%  
+  <%
+  String ID=request.getParameter("id");
+  %>
+  <%  
   
 Class.forName("oracle.jdbc.driver.OracleDriver");  
   
@@ -32,8 +35,8 @@ Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@172.16.75.50:1521
   
 Statement stmt=conn.createStatement();  
   
-ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_ID<=10 ORDER BY COURSE_TYPE_ID ASC");//升序查询前10条数据 
-  
+ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_ID="+request.getParameter("id")); 
+ 
 
 %> 
   <br>
@@ -69,29 +72,31 @@ ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_
 	<div class="row clearfix">
 		<div class="col-md-6 column">
 			<div class="list-group">
-				 <a href="#" class="list-group-item active">课程列表</a>
-				 <% while(rs.next()){ %>
+			<% while(rs.next()){ %>
+				 <a href="#" class="list-group-item active"><%=rs.getString(2)%></a>
+			<% } %>
+			<% ResultSet rs2=stmt.executeQuery("select * from \"Course\" WHERE COURSE_TYPE_ID="+request.getParameter("id")); %>
+				<% while(rs2.next()){  %>
 				<div class="list-group-item">
-				<a href='after/CourseDetail.jsp?id=<%=rs.getString(1)%>'>	<%=rs.getString(2)%></a>
-				
+				<%=rs2.getString(3)%>
 				</div>
-					<% } %>
+				<% } %>
 				<div class="list-group-item">
-					 <span class="badge">14</span>更多课程
+					<a href="index.jsp">返回上一页</a>
 			</div>
 		</div>
 			</div>
 		
 				<div class="col-md-6 column">
 				<%
-				ResultSet rs2=stmt.executeQuery("select * from \"DATA\" WHERE ROWNUM <=50 ORDER BY UPLOAD_DATE desc"); //查询最新上传的3个文件
+				ResultSet rs3=stmt.executeQuery("select * from \"DATA\" WHERE ROWNUM <=50 ORDER BY UPLOAD_DATE desc"); //查询最新上传的3个文件
 				 %>
 				注册用户:   文件总数:  件
 				<div class="list-group">
 				 <a href="#" class="list-group-item active">最新上传</a>
-				 <% while(rs2.next()) { %>
+				 <% while(rs3.next()){ %>
 				<div class="list-group-item">
-				<%=rs2.getString(6)%>  <%=rs2.getString(2)%>
+				<%=rs3.getString(6)%>  <%=rs3.getString(2)%>
 				</div>
 				<% } %>
 			</div>

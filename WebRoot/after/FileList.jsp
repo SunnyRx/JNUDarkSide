@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
- <%  
+  <%  
   
 Class.forName("oracle.jdbc.driver.OracleDriver");  
   
@@ -67,35 +67,33 @@ ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_
 		</div>
 	</div>
 	<div class="row clearfix">
-		<div class="col-md-6 column">
+		<div class="col-md-12 column">
+			<h1 class="text-center blue side STHieti">
+				软件系统分析
+			</h1>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
 			<div class="list-group">
-				 <a href="#" class="list-group-item active">课程列表</a>
-				 <% while(rs.next()){ %>
+				 <a href="#" class="list-group-item active">文件列表</a>
 				<div class="list-group-item">
-				<a href='after/CourseDetail.jsp?id=<%=rs.getString(1)%>'>	<%=rs.getString(2)%></a>
-				
+					List header
 				</div>
-					<% } %>
 				<div class="list-group-item">
-					 <span class="badge">14</span>更多课程
+					<h4 class="list-group-item-heading">
+						List group item heading
+					</h4>
+					<p class="list-group-item-text">
+						...
+					</p>
+				</div>
+				<div class="list-group-item">
+					 <span class="badge">14</span> Help
+				</div> <a class="list-group-item active"> <span class="badge">14</span> Help</a>
 			</div>
 		</div>
-			</div>
-		
-				<div class="col-md-6 column">
-				<%
-				ResultSet rs2=stmt.executeQuery("select * from \"DATA\" WHERE ROWNUM <=50 ORDER BY UPLOAD_DATE desc"); //查询最新上传的3个文件
-				 %>
-				注册用户:   文件总数:  件
-				<div class="list-group">
-				 <a href="#" class="list-group-item active">最新上传</a>
-				 <% while(rs2.next()) { %>
-				<div class="list-group-item">
-				<%=rs2.getString(6)%>  <%=rs2.getString(2)%>
-				</div>
-				<% } %>
-			</div>
-		</div>
+	</div>
 
 	</div>
 	<div class="row clearfix">
