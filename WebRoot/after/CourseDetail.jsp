@@ -78,7 +78,7 @@ ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_
 			<% ResultSet rs2=stmt.executeQuery("select * from \"Course\" WHERE COURSE_TYPE_ID="+request.getParameter("id")); %>
 				<% while(rs2.next()){  %>
 				<div class="list-group-item">
-				<%=rs2.getString(3)%>
+				<a href="after/FileList.jsp?name=<%=rs2.getString(3)%>"><%=rs2.getString(3)%></a>
 				</div>
 				<% } %>
 				<div class="list-group-item">
@@ -89,7 +89,7 @@ ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_
 		
 				<div class="col-md-6 column">
 				<%
-				ResultSet rs3=stmt.executeQuery("select * from \"DATA\" WHERE ROWNUM <=50 ORDER BY UPLOAD_DATE desc"); //查询最新上传的3个文件
+				ResultSet rs3=stmt.executeQuery("select * from \"DATA\" WHERE ROWNUM <=3 ORDER BY UPLOAD_DATE desc"); //查询最新上传的3个文件
 				 %>
 				注册用户:   文件总数:  件
 				<div class="list-group">

@@ -24,6 +24,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  <%
+  String name=request.getParameter("name");
+  name=new String(name.getBytes("iso-8859-1"),"utf-8");
+   %>
   <%  
   
 Class.forName("oracle.jdbc.driver.OracleDriver");  
@@ -32,8 +36,7 @@ Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@172.16.75.50:1521
   
 Statement stmt=conn.createStatement();  
   
-ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_ID<=10 ORDER BY COURSE_TYPE_ID ASC");//升序查询前10条数据 
-  
+ResultSet rs=stmt.executeQuery("select \"Name\",COURSE_NAME,\"Address\",\"Uploader\",\"SIZE\",\"TO_CHAR\"(UPLOAD_DATE,'yyyy-mm-dd') FROM \"DATA\" WHERE COURSE_NAME='"+name+"' ORDER BY UPLOAD_DATE DESC"); 
 
 %> 
   <br>
@@ -69,7 +72,7 @@ ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<h1 class="text-center blue side STHieti">
-				软件系统分析
+				<%=name %>
 			</h1>
 		</div>
 	</div>
@@ -77,20 +80,20 @@ ResultSet rs=stmt.executeQuery("select * from \"COURSE_TYPE\" WHERE COURSE_TYPE_
 		<div class="col-md-12 column">
 			<div class="list-group">
 				 <a href="#" class="list-group-item active">文件列表</a>
+				 
+				
+				 
 				<div class="list-group-item">
-					List header
-				</div>
-				<div class="list-group-item">
-					<h4 class="list-group-item-heading">
-						List group item heading
-					</h4>
-					<p class="list-group-item-text">
-						...
+				<% while(rs.next()){ %>
+					<h1 class="list-group-item-heading blue STHieti">
+						<%=rs.getString(1) %>
+					</h1>
+					
+					<p class="list-group-item-text right blue STHieti">
+						上传用户:<%=rs.getString(4)%>  文件大小:<%=rs.getString(5)%>kb   上传时间: <%=rs.getString(6) %><a href="/file/<%=rs.getString(1) %>">下载</a>
 					</p>
+					<% } %>
 				</div>
-				<div class="list-group-item">
-					 <span class="badge">14</span> Help
-				</div> <a class="list-group-item active"> <span class="badge">14</span> Help</a>
 			</div>
 		</div>
 	</div>
